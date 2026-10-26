@@ -1,0 +1,12 @@
+{
+  "kind": "manually_verified_official_snapshot",
+  "checked_on": "2026-10-10",
+  "description": "Официальные опубликованные сводные показатели Банка России за июнь–август 2026. Это локальный проверенный снимок, а не результат текущего HTTP-запроса; позже обновляется командой sync-reports.",
+  "source_template": "https://www.cbr.ru/statistics/bank_sector/mortgage/Indicator_mortgage/{mmyy}/",
+  "unit_note": "ИЖК в рублях, без двойного учета кредитов ИЖК по ДДУ (они включены в общий ИЖК). Портфель — остаток на начало следующего месяца, остальные показатели — за календарный месяц.",
+  "monthly": [
+    {"period": "2026-06", "portfolio": 22.4, "issuance": 482.7, "avg_loan": 4.8, "count": 101.3, "rate": 9.0},
+    {"period": "2026-07", "portfolio": 22.5, "issuance": 363.4, "avg_loan": 4.3, "count": 85.5, "rate": 10.5},
+    {"period": "2026-08", "portfolio": 22.7, "issuance": 380.6, "avg_loan": 4.4, "count": 86.4, "rate": 10.1}
+  ]
+}

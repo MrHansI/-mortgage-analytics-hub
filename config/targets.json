@@ -1,0 +1,5 @@
+{
+  "description": "Replace IDs with verified mortgage indicators from `python -m app.cli discover --query ипотеч`.",
+  "targets": [
+  ]
+}

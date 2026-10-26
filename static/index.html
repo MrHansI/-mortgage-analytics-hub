@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Своё Жильё — Аналитика ипотечного рынка</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="shell">
+ <aside class="sidebar">
+  <a class="brand" href="#/overview"><span class="brand-logo">⌂</span><span>Своё <b>Жильё</b><small>MARKET INTELLIGENCE</small></span></a>
+  <div class="nav-caption">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+  <nav id="navigation" aria-label="Разделы аналитики">
+   <a data-route="overview" href="#/overview"><span>▦</span> Обзор рынка</a>
+   <a data-route="regions" href="#/regions"><span>◈</span> Регионы России</a>
+   <a data-route="forecast" href="#/forecast"><span>⌁</span> Прогнозирование</a>
+   <a data-route="updates" href="#/updates"><span>◷</span> Журнал обновлений</a>
+  </nav>
+  <div class="nav-caption">ИСТОЧНИКИ</div>
+  <nav><a href="https://www.cbr.ru/statistics/bank_sector/mortgage/" target="_blank" rel="noopener noreferrer"><span>↗</span> Банк России <span class="nav-external">↗</span></a></nav>
+  <div class="sidebar-fill"></div>
+  <div class="side-state"><span class="light"></span><span>Mortgage Analytics Hub <small>Контроль качества данных · v0.5.1</small></span></div>
+ </aside>
+ <main class="main">
+  <header class="topbar"><div><span class="breadcrumb">Аналитика</span><span class="slash"> / </span><strong id="breadcrumb">Обзор рынка</strong></div><div class="header-controls"><span id="health" class="status-chip">● Проверяем API</span><button type="button" class="header-refresh" id="refresh-top" title="Проверить обновления">↻ Обновить</button></div></header>
+  <div class="content">
+   <div id="alert" class="alert" hidden></div>
+   <section class="view" id="view-overview">
+    <div class="hero"><div><span class="kicker">АНАЛИТИЧЕСКАЯ ПЛАТФОРМА / ИПОТЕКА</span><h1>Ипотечный рынок России</h1><p>Реальные показатели Банка России. История, динамика и проверяемые источники.</p></div><a id="export" class="primary-btn" href="#" aria-disabled="true">↓ Скачать ряд CSV</a></div>
+    <div class="notice" id="data-notice">Загружаем данные…</div>
+    <div class="notice" id="quality-notice">Проверяем актуальность, пропуски и расхождения статистики…</div>
+    <div class="stat-grid"><article class="stat"><span>Рядов данных</span><strong id="kpi-series">—</strong><small>В хранилище</small></article><article class="stat"><span>Наблюдений</span><strong id="kpi-obs">—</strong><small>Исторических значений</small></article><article class="stat"><span>Последнее значение</span><strong id="kpi-last">—</strong><small id="kpi-unit">Выберите показатель</small></article><article class="stat"><span>Изменение за месяц</span><strong id="kpi-mom">—</strong><small id="kpi-period">—</small></article></div>
+    <section class="panel"><div class="panel-head"><div><h2>Динамика показателей</h2><p>Наведите на точку, выделите участок мышью для приближения; двойной клик сбрасывает масштаб</p></div><div class="field wide"><label for="series">Показатель</label><select id="series"></select></div></div><div class="plot" id="overview-chart"></div><div class="panel-foot"><span id="series-meta">—</span><a id="series-source" target="_blank" rel="noopener noreferrer">Первоисточник ↗</a></div></section>
+    <div class="two-col"><section class="panel"><div class="panel-head"><div><h2>Последние наблюдения</h2><p>Значения в исходных единицах ЦБ РФ</p></div></div><div class="table-scroll"><table><thead><tr><th>Период</th><th>Значение</th><th>Источник</th></tr></thead><tbody id="recent-table"></tbody></table></div></section><section class="panel"><div class="panel-head"><div><h2>Надёжность данных</h2><p>Проверки и происхождение</p></div></div><div class="quality"><span>✓</span><div><strong>Официальные источники</strong><p>Национальные обзоры ЦБ и региональные таблицы XLSX.</p></div></div><div class="quality"><span>↻</span><div><strong>Повторный импорт без дублей</strong><p>Значения обновляются по ключу ряда и отчётного месяца.</p></div></div><div class="quality"><span>≡</span><div><strong>Протокол загрузок</strong><p>Время, результат и ошибки каждой синхронизации.</p></div></div><a class="inline-link" href="#/updates">Посмотреть журнал →</a></section></div>
+   </section>
+   <section class="view" id="view-regions" hidden>
+    <div class="hero"><div><span class="kicker">ГЕОАНАЛИТИКА</span><h1>Регионы России</h1><p>Сравнение объёмов ипотечных выдач на основании региональной статистики ЦБ.</p></div><a class="secondary-btn" href="https://www.cbr.ru/vfs/statistics/BankSector/Mortgage/02_11_New_loans_mortgage.xlsx" target="_blank" rel="noopener noreferrer">↗ Исходный XLSX</a></div>
+    <div class="filter-row"><div class="field"><label for="region-sheet">Валюта кредитования</label><select id="region-sheet"><option value="total">Всего</option><option value="rub">Рубли</option><option value="fx">Иностранная валюта</option></select></div><div class="field"><label for="region-month">Отчётный период</label><select id="region-month"></select></div></div>
+    <div class="notice" id="region-status" hidden>Региональные данные не загружены. Дождитесь автоматической синхронизации или выполните import-regions.</div>
+    <div id="region-content" hidden>
+      <div class="stat-grid smaller"><article class="stat"><span>Объём по России</span><strong id="reg-country">—</strong><small>млн рублей</small></article><article class="stat"><span>Изменение за год</span><strong id="reg-yoy">—</strong><small>г/г, тот же месяц прошлого года</small></article><article class="stat"><span>Среднее за 12 месяцев</span><strong id="reg-avg">—</strong><small>млн рублей за месяц</small></article><article class="stat"><span>Выдачи с начала года</span><strong id="reg-ytd">—</strong><small>млн рублей</small></article></div>
+      <div class="two-col uneven"><section class="panel"><div class="panel-head"><div><h2>Рейтинг регионов</h2><p>Только субъекты РФ, без страны и федеральных округов</p></div></div><div id="ranking" class="ranking"></div></section><section class="panel"><div class="panel-head"><div><h2>Сравнение регионов</h2><p>Масштабирование, панорамирование, экспорт изображения</p></div></div><div class="filter-row in-panel"><div class="field"><label for="region-a">Регион A</label><select id="region-a"></select></div><div class="field"><label for="region-b">Регион B</label><select id="region-b"></select></div></div><div id="region-chart" class="plot"></div></section></div>
+    </div>
+   </section>
+   <section class="view" id="view-forecast" hidden>
+    <div class="hero"><div><span class="kicker">ПРОГНОЗИРОВАНИЕ / СЦЕНАРНЫЙ АНАЛИЗ</span><h1>Прогноз ипотечного рынка</h1><p>Несколько моделей, тестирование на прошлых данных и оценка сценариев на 1–6 месяцев.</p></div></div>
+    <div class="notice accent">Прогноз — расчёт прототипа, а не официальный прогноз Банка России или инвестиционная рекомендация. Сценарная поправка задаётся пользователем и не является установленной причинно-следственной связью.</div>
+    <div class="filter-row forecasts"><div class="field"><label for="forecast-region">Территория</label><select id="forecast-region"></select></div><div class="field"><label for="forecast-sheet">Валюта</label><select id="forecast-sheet"><option value="total">Всего</option><option value="rub">Рубли</option><option value="fx">Иностранная валюта</option></select></div><div class="field"><label for="forecast-months">Горизонт</label><select id="forecast-months"><option value="1">1 месяц</option><option value="3" selected>3 месяца</option><option value="6">6 месяцев</option></select></div><div class="field"><label for="scenario">Сценарное изменение в месяц</label><select id="scenario"><option value="-3">Стресс: −3%</option><option value="-1">Снижение: −1%</option><option value="0" selected>Базовый: 0%</option><option value="1">Рост: +1%</option><option value="3">Сильный рост: +3%</option></select></div><button type="button" class="primary-btn" id="forecast-run">Рассчитать →</button></div>
+    <div id="forecast-result"><div class="notice">Выберите регион и нажмите «Рассчитать».</div></div>
+    <section class="panel explain"><h2>Как рассчитывается прогноз?</h2><p>Сравниваются сезонное повторение прошлого года, скользящее среднее и тренд с затуханием. Каждая модель проверяется на последних доступных месяцах последовательно, без заглядывания в будущее. Выбирается модель с минимальной средней абсолютной ошибкой (MAE). Диапазон вокруг прогноза основан на исторических ошибках и не гарантирует точность.</p><p><strong>Следующий исследовательский этап:</strong> верифицированные временные ряды ключевой ставки, доходов населения, инфляции и изменений ипотечных программ с проверкой улучшения прогноза на отложенных периодах. Не допускается подставлять будущие значения факторов, неизвестные на дату прогноза.</p></section>
+   </section>
+   <section class="view" id="view-updates" hidden>
+    <div class="hero"><div><span class="kicker">ОПЕРАЦИОННЫЙ КОНТРОЛЬ</span><h1>Журнал обновлений</h1><p>Каждая операция импорта сохраняется в журнале независимо от того, появились ли новые данные.</p></div><button type="button" class="primary-btn" id="refresh-page">↻ Запустить обновление</button></div>
+    <div class="stat-grid smaller"><article class="stat"><span>Всего запусков</span><strong id="log-count">—</strong></article><article class="stat"><span>Успешно</span><strong id="log-success">—</strong></article><article class="stat"><span>Ошибки / частично</span><strong id="log-errors">—</strong></article><article class="stat"><span>Последнее обновление</span><strong id="log-time" class="compact">—</strong></article></div>
+    <section class="panel"><div class="panel-head"><div><h2>История синхронизаций</h2><p>Источники, количество вставленных/обновлённых/неизменённых значений и ошибки</p></div><div class="field"><label for="log-filter">Показывать</label><select id="log-filter"><option value="all">Все операции</option><option value="success">Успешные</option><option value="error">Ошибки / частичные</option><option value="running">Выполняющиеся</option></select></div></div><div class="table-scroll"><table class="log-table"><thead><tr><th>Начало (UTC)</th><th>Источник</th><th>Статус</th><th>Новых</th><th>Исправлено</th><th>Без изменений</th><th>Детали</th></tr></thead><tbody id="log-table"></tbody></table></div><div class="panel-foot"><span>Показаны последние 100 записей. Журнал хранится в базе данных.</span><button type="button" class="text-btn" id="reload-log">Обновить таблицу ↻</button></div></section>
+    <section class="panel"><div class="panel-head"><div><h2>Контроль качества публикаций</h2><p>Пропуски месяцев, дата последнего наблюдения и сверка федеральных показателей с XLSX</p></div></div><div id="quality-summary" class="notice">Проверяем данные…</div><div class="table-scroll"><table><thead><tr><th>Источник</th><th>Рядов</th><th>Последний период</th><th>Устаревших рядов</th><th>Рядов с пропусками</th></tr></thead><tbody id="quality-table"></tbody></table></div><div class="panel-foot"><span id="quality-compare">Сверка источников…</span><span id="quality-evidence">Контрольные суммы источников…</span></div></section>
+    <div class="notice" id="refresh-status">Официальные источники синхронизируются отдельным планировщиком. Оператор может запросить обновление через защищённый API.</div>
+   </section>
+   <footer>Mortgage Analytics Hub v0.5.1 · Демонстрационный продукт для ИТ-конкурса РСХБ · Неофициальный сервис, источники: Банк России</footer>
+  </div>
+ </main>
+</div>
+<script src="/static/plotly.min.js"></script><script src="/static/app.js?v=0.5.1"></script>
+</body></html>
